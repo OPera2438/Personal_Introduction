@@ -3,7 +3,9 @@
 一个纯静态的个人主页：无框架、无构建步骤，克隆下来双击 `index.html` 就能看。
 深色 / 浅色双主题，桌面到手机自适应，项目截图支持点击预览。
 
-在线地址：部署后填在这里（见下方「部署上线」）
+在线地址：<https://opera2438.github.io/Personal_Introduction/>（需先按下方「部署上线」开启 Pages）
+
+仓库：<https://github.com/OPera2438/Personal_Introduction>
 
 ---
 
@@ -85,16 +87,11 @@ python -m http.server 8000
 
 之后每次 `git push` 到 `main` 都会自动重新发布，不需要再操作。
 
-访问地址是 `https://<用户名>.github.io/<仓库名>/`。
+跑完之后访问：<https://opera2438.github.io/Personal_Introduction/>
 
-> **注意**：当前远程仓库名是 `-`（一个短横线），地址会变成 `https://opera2438.github.io/-/`，既难念也难分享。
-> 建议先在 GitHub 上把仓库改名，比如 `personal-site`；如果改成 `OPera2438.github.io`，
-> 地址就会变成 `https://opera2438.github.io/` 这种根路径。
-> 改名后本地要同步更新远程地址：
->
-> ```bash
-> git remote set-url opera https://github.com/OPera2438/新仓库名.git
-> ```
+> 想把地址缩短成 `https://opera2438.github.io/`（没有后面那截仓库名），
+> 需要把仓库名改成 `OPera2438.github.io` —— GitHub 对这个名字有特殊处理，会当作用户主页发布到根路径。
+> 改名后记得同步本地远程地址：`git remote set-url opera <新地址>`。
 
 ### 方案 B：Vercel / Netlify
 

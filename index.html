@@ -24,6 +24,25 @@
     })();
   </script>
 
+  <!-- 每次打开或刷新都停在首页。同样必须在 React 挂载前跑：
+       1. 浏览器默认会恢复刷新前的滚动位置，关掉它；
+       2. 地址栏里残留的 #about / #projects 会让浏览器在加载完成后自动跳过去，先清掉。
+       本站导航用的是 replaceState，不产生页内历史记录，所以关掉恢复不影响前进后退 -->
+  <script>
+    (function () {
+      try {
+        if ('scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual';
+        }
+        if (window.location.hash) {
+          window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+      } catch (e) {
+        // 受限环境下拿不到 History API，退回浏览器默认行为即可。
+      }
+    })();
+  </script>
+
   <!-- Google Fonts：Playfair Display 用于展示型标题，Inter 用于正文，Noto Sans SC 负责中文 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

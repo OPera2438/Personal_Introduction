@@ -829,7 +829,7 @@ strong {
   height: 100%;
   border-radius: var(--radius-pill);
   background: linear-gradient(90deg, var(--accent) 0%, var(--text) 160%);
-  /* 内联 width 是无 JS 时的兜底；script.js 会压回 0 再动画到 data-width */
+  /* 宽度由 Skills 组件控制：先 0%，滚进视口后再设成目标值，靠这条过渡动起来 */
   transition: width 1s var(--ease);
 }
 

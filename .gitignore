@@ -8,11 +8,13 @@ desktop.ini
 .idea/
 *.swp
 
-# 依赖与构建产物（本项目暂时用不到，先占位）
+# 依赖与构建产物
 node_modules/
-dist/
+build/
 .cache/
+.vite/
 
 # 日志与临时文件
 *.log
 *.tmp
+npm-debug.log*

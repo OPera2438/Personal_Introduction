@@ -3,7 +3,7 @@
 一个纯静态的个人主页：无框架、无构建步骤，克隆下来双击 `index.html` 就能看。
 深色 / 浅色双主题，桌面到手机自适应，项目截图支持点击预览。
 
-在线地址：<https://opera2438.github.io/Personal_Introduction/>（需先按下方「部署上线」开启 Pages）
+在线地址：`https://<项目名>.pages.dev`（部署在 Cloudflare Pages，域名在控制台可查）
 
 仓库：<https://github.com/OPera2438/Personal_Introduction>
 
@@ -34,11 +34,10 @@ personal/
 │   ├── sports.png          # 项目截图：校园运动会系统
 │   ├── OKR.png             # 项目截图：OKR 智能管理系统
 │   └── carbon.png          # 项目截图：碳排放监测面板
-├── .github/workflows/
-│   └── deploy.yml          # 推送到 main 自动发布到 GitHub Pages
-├── .nojekyll               # 告诉 Pages 别用 Jekyll 处理，原样发布
 └── .gitignore
 ```
+
+没有构建配置文件，也不需要——这是一个不用编译的站点。
 
 `style.css` 顶部的编号目录和文件里的分节注释一一对应，改样式时先看注释定位小节。
 
@@ -76,37 +75,43 @@ python -m http.server 8000
 
 ## 部署上线
 
-### 方案 A：GitHub Pages（推荐，已配好）
+站点托管在 **Cloudflare Pages**，绑定 GitHub 仓库，推送到 `main` 即自动发布。
 
-仓库里的 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) 已经写好，**只差在 GitHub 上开一次开关**：
+### 构建配置（关键）
 
-1. 推送代码到 `main` 分支
-2. 打开仓库的 **Settings → Pages**
-3. 把 **Source** 从 `Deploy from a branch` 改成 **`GitHub Actions`**
-4. 回到 **Actions** 标签页，看那次工作流跑完（约一分钟）
+这是个**不需要编译**的静态站点，所以构建配置必须是空的。在 Cloudflare 控制台
+**Workers & Pages → 项目 → 设置 → 构建** 里确认：
 
-之后每次 `git push` 到 `main` 都会自动重新发布，不需要再操作。
+| 配置项 | 值 |
+| --- | --- |
+| 框架预设 | 无 / None |
+| 构建命令 | **留空** |
+| 构建输出目录 | `/` |
+| 根目录 | 留空 |
 
-跑完之后访问：<https://opera2438.github.io/Personal_Introduction/>
+配置正确时，构建日志会显示 `No build command specified. Skipping build step.`，
+然后直接进入文件上传。
 
-> 想把地址缩短成 `https://opera2438.github.io/`（没有后面那截仓库名），
-> 需要把仓库名改成 `OPera2438.github.io` —— GitHub 对这个名字有特殊处理，会当作用户主页发布到根路径。
-> 改名后记得同步本地远程地址：`git remote set-url opera <新地址>`。
+> 如果这里残留了框架预设或 `npm run build` 之类的命令，部署会在「构建应用程序」
+> 这一步几秒内失败——仓库里没有 `package.json`，命令无从执行。这是最常见的失败原因。
 
-### 方案 B：Vercel / Netlify
+### 日常发布
 
-两家都能直接托管静态站点，也都免费：
+```bash
+git add .
+git commit -m "更新内容"
+git push
+```
 
-- **Vercel**：导入 GitHub 仓库，框架预设选 **Other**，构建命令留空，输出目录填 `.`
-- **Netlify**：可以直接把整个文件夹拖进网页；或连接仓库，同样不填构建命令
+推送后 Cloudflare 会自动拉取并发布，一般不到一分钟。控制台的**部署**页面能看到每次记录，
+出问题可以一键回滚到任意历史版本。
 
-两者都会自动配好 HTTPS，也支持绑定自己的域名。
+### 其他
 
-### 部署前检查
-
-- 站内所有路径都是相对路径（`style.css`、`assets/...`），放在子目录下也不会失效，不需要改 `base`
-- 字体和图标走 CDN，服务器不用做任何配置
-- 没有后端、没有环境变量、没有密钥
+- **预览部署**：非 `main` 分支的推送会生成独立的预览地址，正式站点不受影响
+- **自定义域名**：控制台 → 项目 → 自定义域，加一条 CNAME 即可，证书自动签发
+- 站内全是相对路径（`style.css`、`assets/...`），换域名或放进子目录都不用改代码
+- 字体和图标走 CDN，服务器无需任何配置；没有后端、环境变量和密钥
 
 ---
 

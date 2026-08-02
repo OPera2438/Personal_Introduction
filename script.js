@@ -2,7 +2,8 @@
    个人介绍网站 —— 交互脚本
    0. 主题切换（深色 / 浅色 + localStorage）
    1. 打字机效果   2. 导航平滑滚动   3. 技能进度条动画
-   4. 导航滚动高亮 5. 导航毛玻璃状态 6. 回到顶部悬浮按钮
+   4. 导航滚动高亮 5. 顶部滚动状态（导航毛玻璃 + 箭头淡出）
+   6. 回到顶部悬浮按钮
    7. 项目截图预览弹层
    ============================================================= */
 
@@ -272,18 +273,34 @@
   }
 
   /* -----------------------------------------------------------
-     5. 导航毛玻璃状态
-     顶部时透明（压在深色 Hero 上），下滚后加 .is-scrolled
+     5. 顶部滚动状态
+     导航毛玻璃（下滚后加 .is-scrolled）＋ Hero 箭头随滚动淡出。
+     两件事都只看页面顶部那一段距离，共用一个滚动监听
      ----------------------------------------------------------- */
   function initHeaderState() {
     var header = document.querySelector('.site-header');
-    if (!header) return;
+    var hint = document.querySelector('.hero__scroll');
+    if (!header && !hint) return;
 
     var ticking = false;
 
     function update() {
       ticking = false;
-      header.classList.toggle('is-scrolled', window.scrollY > 40);
+      var y = window.scrollY;
+
+      if (header) {
+        header.classList.toggle('is-scrolled', y > 40);
+      }
+
+      if (hint) {
+        // 滚过 45% 屏高时刚好完全透明，按视口取值，小屏不会拖太久
+        var opacity = 1 - y / (window.innerHeight * 0.45);
+        opacity = Math.max(0, Math.min(1, opacity));
+
+        hint.style.opacity = opacity.toFixed(3);
+        // 淡到看不见后别再挡点击（它此时多半已经滚出视口）
+        hint.style.pointerEvents = opacity < 0.05 ? 'none' : '';
+      }
     }
 
     window.addEventListener('scroll', function () {
@@ -292,6 +309,7 @@
       requestAnimationFrame(update);
     }, { passive: true });
 
+    window.addEventListener('resize', update);
     update();
   }
 

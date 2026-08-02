@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="张三的个人主页 —— 全栈开发者，专注 Web 工程与 AI 应用落地。">
+  <meta name="author" content="张三">
+  <meta name="color-scheme" content="light dark">
+  <title>刘畅 | 个人介绍</title>
+  <link rel="icon" href="assets/favicon.ico">
+
+  <!-- 主题预设：必须在样式表之前同步执行，避免刷新时闪一下白屏 -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts：Playfair Display 用于展示型标题，Inter 用于正文，Noto Sans SC 负责中文 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+
+  <!-- Font Awesome 6（免费版图标） -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <!-- ============ 导航栏 ============ -->
+  <header class="site-header" id="siteHeader">
+    <nav class="nav" aria-label="主导航">
+      <a class="nav__logo" href="#home">刘畅</a>
+
+      <ul class="nav__menu" id="navMenu">
+        <li class="nav__item"><a class="nav__link active" href="#home">首页</a></li>
+        <li class="nav__item"><a class="nav__link" href="#about">关于我</a></li>
+        <li class="nav__item"><a class="nav__link" href="#skills">技能</a></li>
+        <li class="nav__item"><a class="nav__link" href="#projects">项目</a></li>
+        <li class="nav__item"><a class="nav__link" href="#contact">联系</a></li>
+      </ul>
+
+      <!-- 深色 / 浅色切换 -->
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色模式" title="切换深色 / 浅色模式">
+        <span class="theme-toggle__track">
+          <i class="fa-solid fa-sun theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"></i>
+          <i class="fa-solid fa-moon theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></i>
+        </span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ Hero ============ -->
+    <section class="hero" id="home">
+      <!-- 装饰层：网格 + 光晕，纯 CSS 绘制 -->
+      <div class="hero__decor" aria-hidden="true">
+        <span class="hero__grid"></span>
+        <span class="hero__glow hero__glow--a"></span>
+        <span class="hero__glow hero__glow--b"></span>
+      </div>
+
+      <div class="hero__inner">
+        <p class="hero__hello">Hello, I am</p>
+
+        <h1 class="hero__display">LIU&nbsp;CHANG</h1>
+
+        <!-- 打字机效果现在只作用于副标题 -->
+        <p class="hero__subtitle">
+          <span id="typewriter" data-text="Currently designing products for humans.">Currently designing products for
+            humans.</span><span class="hero__cursor" aria-hidden="true"></span>
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--ghost" href="#contact">联系方式</a>
+          <a class="btn btn--ghost" href="#projects">我的项目</a>
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#about" aria-label="向下滚动">
+        <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+      </a>
+    </section>
+
+    <!-- ============ 关于我 ============ -->
+    <section class="section section--about" id="about">
+      <div class="section__inner">
+
+        <header class="section__header">
+          <p class="section__eyebrow">01 — About</p>
+          <h2 class="section__title">关于我</h2>
+          <p class="section__subtitle">一点背景，和一些代码之外的事</p>
+        </header>
+
+        <div class="card about__card">
+
+          <div class="about__text">
+            <p>
+              我是2026届电子信息工程本科毕业生，在校期间系统学习了软硬件知识，并通过项目实践将理论转化为应用。我独立开发了校园运动会报名与成绩管理系统，涵盖后端架构、数据库设计及前端响应式交互，积累了完整的全栈项目经验。
+            </p>
+
+            <p>
+              在远大科技集团的AI应用开发实习中，我深入参与企业级AI聊天助手的优化，以及碳排放数据的实时集成与可视化展示，熟悉大模型API调用、Prompt工程和前端图表开发。我熟练掌握Python、MySQL、Vue等技术栈，习惯用Git进行规范协作，同时具备快速学习能力和团队合作精神。职业方向聚焦于AI应用开发，期待在技术落地中持续创造价值。
+            </p>
+          </div>
+
+          <div class="about__side">
+            <ul class="about__stats">
+              <li class="stat">
+                <span class="stat__num">三个月</span>
+                <span class="stat__label">实习经验</span>
+              </li>
+              <li class="stat">
+                <span class="stat__num">2<span class="stat__plus"></span></span>
+                <span class="stat__label">交付项目</span>
+              </li>
+              <li class="stat">
+                <span class="stat__num">2</span>
+                <span class="stat__label">独立项目</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </section>
+
+    <!-- ============ 技能 ============ -->
+    <section class="section section--skills" id="skills">
+      <div class="section__inner">
+
+        <header class="section__header">
+          <p class="section__eyebrow">02 — Skills</p>
+          <h2 class="section__title">技能</h2>
+          <p class="section__subtitle">百分比只是个大概的自我评估，仅供参考</p>
+        </header>
+
+        <ul class="card skills__grid">
+
+          <li class="skill">
+            <div class="skill__head">
+              <span class="skill__name">Python</span>
+              <span class="skill__pct">80%</span>
+            </div>
+            <div class="skill__bar" role="progressbar" aria-label="JavaScript / TypeScript 熟练度" aria-valuenow="80"
+              aria-valuemin="0" aria-valuemax="100">
+              <span class="skill__fill" data-width="80" style="width: 80%;"></span>
+            </div>
+            <p class="skill__note">日常主力语言，熟悉 Django 框架及 ORM，能完成基础的后端接口开发。</p>
+          </li>
+
+          <li class="skill">
+            <div class="skill__head">
+              <span class="skill__name">MySQL</span>
+              <span class="skill__pct">75%</span>
+            </div>
+            <div class="skill__bar" role="progressbar" aria-label="React 熟练度" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <span class="skill__fill" data-width="75" style="width: 75%;"></span>
+            </div>
+            <p class="skill__note">掌握数据库表设计、简单查询优化和事务处理。</p>
+          </li>
+
+          <li class="skill">
+            <div class="skill__head">
+              <span class="skill__name">AI / ML</span>
+              <span class="skill__pct">75%</span>
+            </div>
+            <div class="skill__bar" role="progressbar" aria-label="Node.js 熟练度" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <span class="skill__fill" data-width="75" style="width: 75%;"></span>
+            </div>
+            <p class="skill__note">了解大模型 API 调用、Prompt 工程及 RAG 基本概念。</p>
+          </li>
+
+          <li class="skill">
+            <div class="skill__head">
+              <span class="skill__name">JavaScript / TypeScript</span>
+              <span class="skill__pct">65%</span>
+            </div>
+            <div class="skill__bar" role="progressbar" aria-label="Python 熟练度" aria-valuenow="65" aria-valuemin="0"
+              aria-valuemax="100">
+              <span class="skill__fill" data-width="65" style="width: 65%;"></span>
+            </div>
+            <p class="skill__note">熟悉 ES6+ 语法，结合 Axios 处理前后端通信。</p>
+          </li>
+
+          <li class="skill">
+            <div class="skill__head">
+              <span class="skill__name">Vue</span>
+              <span class="skill__pct">60%</span>
+            </div>
+            <div class="skill__bar" role="progressbar" aria-label="Docker 与 CI/CD 熟练度" aria-valuenow="60"
+              aria-valuemin="0" aria-valuemax="100">
+              <span class="skill__fill" data-width="60" style="width: 60%;"></span>
+            </div>
+            <p class="skill__note">掌握组件化开发，配合 Bootstrap 实现页面布局。</p>
+          </li>
+
+          <li class="skill">
+            <div class="skill__head">
+              <span class="skill__name">Node.js</span>
+              <span class="skill__pct">60%</span>
+            </div>
+            <div class="skill__bar" role="progressbar" aria-label="AI 与机器学习熟练度" aria-valuenow="60" aria-valuemin="0"
+              aria-valuemax="100">
+              <span class="skill__fill" data-width="60" style="width: 60%;"></span>
+            </div>
+            <p class="skill__note">了解 Express 框架，能编写简单的 RESTful 接口。</p>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 项目经历 ============ -->
+    <section class="section section--projects" id="projects">
+      <div class="section__inner">
+
+        <header class="section__header">
+          <p class="section__eyebrow">03 — Work</p>
+          <h2 class="section__title">项目经历</h2>
+          <p class="section__subtitle">挑了三个比较有代表性的</p>
+        </header>
+
+        <div class="projects__grid">
+
+          <article class="card project-card">
+            <div class="project-card__media">
+              <img class="project-card__img" src="assets/sports.png"
+                alt="校园运动会报名与成绩管理系统截图" width="875" height="877" loading="lazy">
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">校园运动会报名与成绩管理系统</h3>
+              <p class="project-card__desc">
+                独立设计并开发的校园运动会全流程管理平台，涵盖项目设置、学生报名、裁判打分与成绩公示等环节。通过报名冲突检测和成绩计算优化，有效降低了人工统计出错率，提升了赛事组织效率。
+              </p>
+              <ul class="project-card__tags">
+                <li class="tag">Python</li>
+                <li class="tag">Django</li>
+                <li class="tag">MySQL</li>
+                <li class="tag">Vue</li>
+              </ul>
+            </div>
+            <footer class="project-card__footer">
+              <button class="btn btn--soft btn--sm" type="button" data-project="校园运动会报名与成绩管理系统">
+                查看详情 <i class="fa-solid fa-arrow-right btn__arrow" aria-hidden="true"></i>
+              </button>
+            </footer>
+          </article>
+
+          <article class="card project-card">
+            <div class="project-card__media">
+              <img class="project-card__img" src="assets/OKR.png" alt="OKR 智能管理系统截图"
+                width="959" height="951" loading="lazy">
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">OKR 智能管理系统</h3>
+              <p class="project-card__desc">
+                支持集团战略级OKR的层级穿透与部门分解，在线创建目标并设定5个由AI智能生成的关键结果，覆盖依赖关系、进度跟踪、报告生成与数据仪表盘等全流程管理功能，帮助企业高效落地目标管理闭环。
+              </p>
+              <ul class="project-card__tags">
+                <li class="tag">Claude API</li>
+                <li class="tag">Python</li>
+                <li class="tag">JavaScript</li>
+                <li class="tag">前端可视化</li>
+              </ul>
+            </div>
+            <footer class="project-card__footer">
+              <button class="btn btn--soft btn--sm" type="button" data-project="企业AI聊天助手">
+                查看详情 <i class="fa-solid fa-arrow-right btn__arrow" aria-hidden="true"></i>
+              </button>
+            </footer>
+          </article>
+
+          <article class="card project-card">
+            <div class="project-card__media">
+              <img class="project-card__img" src="assets/carbon.png" alt="碳排放实时监测面板截图"
+                width="959" height="953" loading="lazy">
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">碳排放实时监测面板</h3>
+              <p class="project-card__desc">
+                对接企业碳排放数据库，实现数据的实时提取与指标计算，并以图表和仪表盘形式进行动态可视化展示。为管理层提供了直观的碳排放监控工具，支持及时决策与异常预警。
+              </p>
+              <ul class="project-card__tags">
+                <li class="tag">Claude API</li>
+                <li class="tag">MySQL</li>
+                <li class="tag">Python</li>
+                <li class="tag">数据可视化</li>
+              </ul>
+            </div>
+            <footer class="project-card__footer">
+              <button class="btn btn--soft btn--sm" type="button" data-project="碳排放实时监测面板">
+                查看详情 <i class="fa-solid fa-arrow-right btn__arrow" aria-hidden="true"></i>
+              </button>
+            </footer>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 联系方式 ============ -->
+    <section class="section section--contact" id="contact">
+      <div class="section__inner">
+
+        <header class="section__header">
+          <p class="section__eyebrow">04 — Contact</p>
+          <h2 class="section__title">联系我</h2>
+          <p class="section__subtitle">欢迎联系</p>
+        </header>
+
+        <ul class="contact-list">
+          <li class="card contact-item">
+            <span class="contact-item__icon"><i class="fa-solid fa-envelope" aria-hidden="true"></i></span>
+            <span class="contact-item__label">邮箱</span>
+            <a class="contact-item__value" href="mailto:2438157551@qq.com">2438157551@qq.com</a>
+          </li>
+          <li class="card contact-item">
+            <span class="contact-item__icon"><i class="fa-brands fa-github" aria-hidden="true"></i></span>
+            <span class="contact-item__label">GitHub</span>
+            <a class="contact-item__value" href="https://github.com/OPera2438" target="_blank"
+              rel="noopener">github.com/OPera2438</a>
+          </li>
+          <li class="card contact-item">
+            <span class="contact-item__icon"><i class="fa-brands fa-weixin" aria-hidden="true"></i></span>
+            <span class="contact-item__label">微信</span>
+            <span class="contact-item__value contact-item__value--masked">LC18979082489</span>
+          </li>
+          <li class="card contact-item">
+            <span class="contact-item__icon"><i class="fa-brands fa-qq" aria-hidden="true"></i></span>
+            <span class="contact-item__label">QQ</span>
+            <span class="contact-item__value contact-item__value--masked">2438157551</span>
+          </li>
+        </ul>
+
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ 页脚 ============ -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__copy">&copy; <span id="year">2026</span> vibe coding</p>
+      <ul class="site-footer__links">
+        <li><a href="https://github.com/OPera2438" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="mailto:2438157551@qq.com">Email</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- 项目截图预览：内容由 JS 从被点击的卡片里取 -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle" hidden>
+    <div class="lightbox__backdrop" data-lightbox-close></div>
+
+    <div class="lightbox__panel">
+      <button class="lightbox__close" type="button" aria-label="关闭预览" data-lightbox-close>
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+
+      <img class="lightbox__img" id="lightboxImg" src="" alt="">
+
+      <div class="lightbox__meta">
+        <h3 class="lightbox__title" id="lightboxTitle"></h3>
+        <p class="lightbox__desc" id="lightboxDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 回到顶部：默认隐藏，下滚一段距离后由 JS 加 .is-visible 显示 -->
+  <button class="back-to-top" id="backToTop" type="button" aria-label="回到顶部" title="回到顶部">
+    <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

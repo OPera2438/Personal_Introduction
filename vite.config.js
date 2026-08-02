@@ -1,11 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// 输出目录用 Vite 默认的 dist/，与 Cloudflare Pages 控制台里的「构建输出目录」保持一致
 export default defineConfig({
   plugins: [react()],
-  build: {
-    // 输出到 build/ 而不是 Vite 默认的 dist/：
-    // Cloudflare Pages 的 React 预设默认就读 build 目录，保持一致，控制台不用改配置
-    outDir: 'build',
-  },
 });

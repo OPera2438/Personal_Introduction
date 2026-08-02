@@ -13,7 +13,7 @@
 | 项目 | 说明 |
 | --- | --- |
 | 框架 | React 19（函数组件 + Hooks，无类组件） |
-| 构建 | Vite 8，输出到 `build/` |
+| 构建 | Vite 8，输出到 `dist/` |
 | 样式 | 原生 CSS 单文件，主题走 CSS 自定义属性，布局用 Grid / Flex / **subgrid** |
 | 路由 | 无。单页锚点滚动，不需要 react-router |
 | 状态 | 无。组件内 `useState` 足够，不需要 Redux / Zustand |
@@ -30,7 +30,7 @@
 personal/
 ├── index.html              # Vite 入口，含防闪屏的主题预设脚本
 ├── package.json
-├── vite.config.js          # 关键：build.outDir 设为 build
+├── vite.config.js          # React 插件，输出目录用默认的 dist/
 ├── .node-version           # Cloudflare 构建用的 Node 版本
 ├── public/
 │   └── assets/             # 原样复制到产物，路径保持 /assets/xxx
@@ -87,7 +87,7 @@ npm run dev     # 开发服务器，改完自动热更新
 打开终端提示的地址（默认 <http://localhost:5173>）。
 
 ```bash
-npm run build   # 构建到 build/
+npm run build   # 构建到 dist/
 npm run preview # 本地预览构建产物，行为最接近线上
 ```
 
@@ -105,14 +105,15 @@ npm run preview # 本地预览构建产物，行为最接近线上
 | --- | --- |
 | 框架预设 | React |
 | 构建命令 | `npm run build` |
-| 构建输出目录 | `build` |
+| 构建输出目录 | `dist` |
 | 根目录 | 留空 |
 
-Vite 默认输出到 `dist/`，这里在 `vite.config.js` 里改成了 `build/`，就是为了和
-React 预设的默认值对上，控制台不用额外改。
+**输出目录必须是 `dist`**，这是 Vite 的默认值。React 预设有时会填成 `build`
+（那是 Create React App 的默认值，本项目用的是 Vite），填错会在构建成功之后、
+上传之前报 `Output directory "build" not found`——构建日志一切正常，
+失败发生在最后的 Validating asset output directory 一步。
 
-> 如果预设填的构建命令不是 `npm run build`（个别预设会填 `react-scripts build`），
-> 手动改成 `npm run build`——本项目用的是 Vite，没有 react-scripts。
+> 同理，如果预设填的构建命令是 `react-scripts build`，手动改成 `npm run build`。
 
 Node 版本由仓库根目录的 `.node-version` 指定（22）。Vite 8 要求 Node 20.19+，
 Cloudflare 默认的 Node 版本可能偏低，这个文件是必需的。

@@ -23,7 +23,7 @@
   --accent-soft: rgba(192, 160, 96, 0.12);
 
   /* 卡片：浅色下是接近白的半透明玻璃 */
-  --surface: rgba(255, 255, 255, 0.72);
+  --surface: rgba(255, 255, 255, 0.96);
   --surface-solid: #FFFFFF;
   --border: rgba(17, 17, 17, 0.08);
   --border-strong: rgba(17, 17, 17, 0.16);
@@ -60,7 +60,7 @@
   --accent-soft: rgba(192, 160, 96, 0.16);
 
   /* 卡片：深色下毛玻璃更明显 */
-  --surface: rgba(255, 255, 255, 0.045);
+  --surface: rgba(255, 255, 255, 0.065);
   --surface-solid: #161616;
   --border: rgba(255, 255, 255, 0.09);
   --border-strong: rgba(255, 255, 255, 0.2);
@@ -128,16 +128,6 @@ body {
               color var(--theme-dur) var(--ease);
 }
 
-/* 页面整体淡入 */
-body {
-  animation: page-fade 0.6s var(--ease) both;
-}
-
-@keyframes page-fade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
 h1, h2, h3, h4 {
   margin: 0;
   color: var(--text);
@@ -186,15 +176,15 @@ strong {
 .skip-link:focus { left: 0; opacity: 1; }
 
 /* -------------------------------------------------------------
-   3. 通用卡片（毛玻璃）
+   3. 通用卡片
+   卡片数量多且会随页面滚动，实时 backdrop-filter 在 Edge/Chromium 上
+   容易导致大面积重绘；改用高不透明度表面色保留层次，性能更稳定。
    ------------------------------------------------------------- */
 .card {
   background-color: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  -webkit-backdrop-filter: blur(var(--blur));
-  backdrop-filter: blur(var(--blur));
   transition: background-color var(--theme-dur) var(--ease),
               border-color var(--theme-dur) var(--ease),
               box-shadow var(--dur) var(--ease),
@@ -346,11 +336,10 @@ strong {
 }
 
 .site-header.is-scrolled {
-  background-color: var(--nav-bg);
+  /* 固定导航使用实色表面，避免 Edge/Chromium 滚动时持续重算毛玻璃。 */
+  background-color: var(--surface-solid);
   border-bottom-color: var(--border);
   box-shadow: var(--shadow-sm);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 }
 
 /* 三栏网格：两侧 1fr 等宽，中间自适应，
@@ -514,6 +503,7 @@ strong {
   isolation: isolate;
   overflow: hidden;
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -568,30 +558,29 @@ strong {
   mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 20%, transparent 78%);
 }
 
-/* 金色 / 冷色光晕。两套主题共用同一组颜色，只改透明度，
-   这样切换时是平滑淡变而不是换色 */
+/* 光晕改用静态径向渐变，避免 Edge 在滚动时反复栅格化两个
+   400px 以上、blur(110px) 的滤镜层。视觉接近，但合成成本明显更低。 */
 .hero__glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(110px);
   opacity: var(--hero-glow-opacity);
   transition: opacity var(--theme-dur) var(--ease);
 }
 
 .hero__glow--a {
-  width: 480px;
-  height: 480px;
-  top: -120px;
-  left: 8%;
-  background: rgba(192, 160, 96, 0.4);
+  width: 560px;
+  height: 560px;
+  top: -180px;
+  left: 4%;
+  background: radial-gradient(circle, rgba(192, 160, 96, 0.34) 0%, transparent 68%);
 }
 
 .hero__glow--b {
-  width: 420px;
-  height: 420px;
-  bottom: -140px;
-  right: 6%;
-  background: rgba(80, 120, 190, 0.28);
+  width: 500px;
+  height: 500px;
+  bottom: -190px;
+  right: 2%;
+  background: radial-gradient(circle, rgba(80, 120, 190, 0.24) 0%, transparent 68%);
 }
 
 /* --- 角落头像徽标 --- */
@@ -826,11 +815,13 @@ strong {
 
 .skill__fill {
   display: block;
+  width: 100%;
   height: 100%;
   border-radius: var(--radius-pill);
   background: linear-gradient(90deg, var(--accent) 0%, var(--text) 160%);
-  /* 宽度由 Skills 组件控制：先 0%，滚进视口后再设成目标值，靠这条过渡动起来 */
-  transition: width 1s var(--ease);
+  transform: scaleX(var(--skill-progress, 0));
+  transform-origin: left center;
+  transition: transform 0.8s var(--ease);
 }
 
 .skill__note {
@@ -869,9 +860,11 @@ strong {
   box-shadow: var(--shadow-md);
 }
 
-.project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
 }
 
 .project-card__media {
@@ -889,8 +882,10 @@ strong {
   transition: transform 0.6s var(--ease);
 }
 
-.project-card:hover .project-card__img {
-  transform: scale(1.05);
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover .project-card__img {
+    transform: scale(1.04);
+  }
 }
 
 /* 标题 / 简介 / 标签这三行也挂回外层网格，逐行对齐 */
@@ -1137,9 +1132,7 @@ a.contact-item__value:hover { color: var(--accent); opacity: 1; }
 .lightbox__backdrop {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.72);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.82);
   cursor: zoom-out;
 }
 
@@ -1301,6 +1294,27 @@ a.contact-item__value:hover { color: var(--accent); opacity: 1; }
   .contact-item__value { flex: 1 1 100%; }
 
   .back-to-top { right: 16px; bottom: 16px; width: 42px; height: 42px; }
+}
+
+/* Windows 高对比模式：保留清晰边界，不依赖半透明与阴影表达层级。 */
+@media (forced-colors: active) {
+  .card,
+  .site-header.is-scrolled,
+  .back-to-top,
+  .lightbox__panel {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+
+  .skill__fill { background: Highlight; }
+  .hero__grid,
+  .hero__glow { display: none; }
+}
+
+/* 浏览器或系统要求降低透明度时，统一使用实色表面。 */
+@media (prefers-reduced-transparency: reduce) {
+  .card,
+  .site-header.is-scrolled { background-color: var(--surface-solid); }
 }
 
 /* -------------------------------------------------------------

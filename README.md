@@ -163,11 +163,13 @@ git push
 
 ## 浏览器支持
 
-面向现代浏览器，需要 **Chrome 117+ / Edge 117+ / Firefox 71+ / Safari 16+**。
+生产构建目标覆盖 **Chrome 87+ / Edge 88+ / Firefox 78+ / Safari 14+**，重点在当前版本的
+Chrome、Edge、Firefox、Safari 上验证。IE 不支持，也不打算支持。
 
-门槛主要来自项目卡片用的 CSS `subgrid`。老版本浏览器会走
-`@supports not (grid-template-rows: subgrid)` 的兜底样式，退回弹性布局——底部按钮仍然对齐，
-只是标题、简介的起点可能差一点。IE 不支持，也不打算支持。
+- 项目卡片使用 CSS `subgrid`；不支持的浏览器会通过 `@supports` 退回弹性布局，底部按钮仍然对齐，只是标题和简介的起点可能略有差异。
+- 固定导航、卡片和弹层使用实色或高不透明度表面，避免 Edge / Chromium 在滚动中持续重绘大面积毛玻璃。
+- Windows 高对比模式通过 `forced-colors` 提供清晰边界；“减少动效”和“降低透明度”偏好均有对应降级。
+- Hover 动画只在支持精确指针的设备启用，手机和平板不会残留悬停状态。
 
 ---
 

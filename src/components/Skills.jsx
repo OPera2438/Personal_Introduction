@@ -34,12 +34,11 @@ export default function Skills() {
               aria-valuemin={0}
               aria-valuemax={100}
             >
-              {/* 宽度从 0 动画到目标值，过渡写在 CSS 的 .skill__fill 里；
-                  减少动效时直接就位，顺手把过渡关掉 */}
+              {/* 用 transform 而不是 width 播放进度，避免动画每帧触发布局计算。 */}
               <span
                 className="skill__fill"
                 style={{
-                  width: filled ? `${skill.pct}%` : '0%',
+                  '--skill-progress': filled ? skill.pct / 100 : 0,
                   transition: reduced ? 'none' : undefined,
                 }}
               ></span>

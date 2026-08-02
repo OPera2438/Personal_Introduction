@@ -1,11 +1,21 @@
+import { useEffect, useState } from 'react';
+
 import useFadeOnScroll from '../hooks/useFadeOnScroll.js';
 import useTypewriter from '../hooks/useTypewriter.js';
 
 const SUBTITLE = 'Currently designing products for humans.';
 
 export default function Hero() {
-  const typed = useTypewriter(SUBTITLE);
+  const [pageVisible, setPageVisible] = useState(() => document.visibilityState !== 'hidden');
+  const typed = useTypewriter(SUBTITLE, pageVisible);
   const scrollHintRef = useFadeOnScroll(0.45);
+
+  // 标签页切到后台时暂停循环定时器，减少 Edge 的后台唤醒与恢复瞬间卡顿。
+  useEffect(() => {
+    const onVisibilityChange = () => setPageVisible(document.visibilityState !== 'hidden');
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+  }, []);
 
   return (
     <section className="hero" id="home">

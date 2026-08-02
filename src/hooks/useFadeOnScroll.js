@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+import { subscribeViewportFrame } from './useScrollValue.js';
+
 /* 元素随滚动连续淡出（首页那个向下箭头）。
    这里刻意绕过 state 直接写 style：透明度每帧都在变，
    走 setState 会让整棵树每帧重渲染；而且 CSS transition 里也不能加 opacity，
@@ -13,33 +15,29 @@ export default function useFadeOnScroll(ratio = 0.45) {
     const el = ref.current;
     if (!el) return undefined;
 
-    let ticking = false;
+    let lastOpacity = -1;
+    let pointerDisabled = false;
 
     function update() {
-      ticking = false;
-
       let opacity = 1 - window.scrollY / (window.innerHeight * ratio);
       opacity = Math.max(0, Math.min(1, opacity));
 
-      el.style.opacity = opacity.toFixed(3);
-      // 淡到看不见后别再挡点击（它此时多半已经滚出视口）
-      el.style.pointerEvents = opacity < 0.05 ? 'none' : '';
+      // 到达全显或全隐后不再重复写 style，减少 Edge 的样式失效与合成工作。
+      const rounded = Math.round(opacity * 100) / 100;
+      if (rounded !== lastOpacity) {
+        el.style.opacity = String(rounded);
+        lastOpacity = rounded;
+      }
+
+      const shouldDisablePointer = opacity < 0.05;
+      if (shouldDisablePointer !== pointerDisabled) {
+        el.style.pointerEvents = shouldDisablePointer ? 'none' : '';
+        pointerDisabled = shouldDisablePointer;
+      }
     }
 
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', update);
     update();
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', update);
-    };
+    return subscribeViewportFrame(update);
   }, [ratio]);
 
   return ref;

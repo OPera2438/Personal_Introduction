@@ -118,7 +118,15 @@ export default function Lightbox({ item, onClose }) {
           <i className="fa-solid fa-xmark" aria-hidden="true"></i>
         </button>
 
-        <img className="lightbox__img" id="lightboxImg" src={rendered.image} alt={rendered.alt} />
+        <img
+          className="lightbox__img"
+          id="lightboxImg"
+          src={rendered.image}
+          alt={rendered.alt}
+          width={rendered.width}
+          height={rendered.height}
+          decoding="async"
+        />
 
         <div className="lightbox__meta">
           <h3 className="lightbox__title" id="lightboxTitle">{rendered.title}</h3>

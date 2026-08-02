@@ -26,8 +26,13 @@ export default function useHashScroll() {
         block: 'start',
       });
 
-      // 同步地址栏，但不额外产生一条历史记录
-      window.history.replaceState(null, '', hash);
+      // 同步地址栏，但不额外产生一条历史记录。
+      // file:// 或受限环境可能禁止 History API，不影响滚动本身。
+      try {
+        window.history.replaceState(null, '', hash);
+      } catch (error) {
+        // 无需处理：地址栏不更新也不影响页面功能。
+      }
     }
 
     document.addEventListener('click', onClick);

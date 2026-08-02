@@ -23,6 +23,7 @@ export default function Projects({ onPreview }) {
                 width={project.width}
                 height={project.height}
                 loading="lazy"
+                decoding="async"
               />
             </div>
 

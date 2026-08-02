@@ -16,8 +16,12 @@ export default function BackToTop() {
   const handleClick = useCallback(() => {
     window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
 
-    // 顺手清掉地址栏里残留的 #about 之类锚点
-    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    // 顺手清掉地址栏里残留的 #about 之类锚点；受限环境失败时不影响滚动。
+    try {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    } catch (error) {
+      // 无需处理。
+    }
   }, [reduced]);
 
   return (

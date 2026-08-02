@@ -8,14 +8,14 @@ const RESTART_TIME = 400; // 清空后到下一轮的间隔
 
 /* 打字机效果：逐字打出 → 停 2 秒 → 清空 → 循环重播。
    减少动效时直接返回完整文字，不做循环 */
-export default function useTypewriter(text) {
+export default function useTypewriter(text, active = true) {
   const reduced = usePrefersReducedMotion();
 
   // 初始值给全文：JS 还没跑起来时页面也是完整的，不会闪一下空白
   const [shown, setShown] = useState(text);
 
   useEffect(() => {
-    if (reduced) {
+    if (reduced || !active) {
       setShown(text);
       return undefined;
     }
@@ -47,7 +47,7 @@ export default function useTypewriter(text) {
 
     // 任何时刻只有一个待执行的定时器，清掉当前这个就够
     return () => clearTimeout(timer);
-  }, [text, reduced]);
+  }, [text, reduced, active]);
 
   return shown;
 }

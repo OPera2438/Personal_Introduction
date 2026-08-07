@@ -2,7 +2,7 @@
 
 一个单页个人主页，基于 **React + Vite**。深色 / 浅色双主题，桌面到手机自适应，项目截图支持点击预览。
 
-在线地址：`https://<项目名>.pages.dev`（部署在 Cloudflare Pages，域名在控制台可查）
+在线地址：`personal-introduction-d7v.pages.dev`（部署在 Cloudflare Pages，域名在控制台可查）
 
 仓库：<https://github.com/OPera2438/Personal_Introduction>
 
